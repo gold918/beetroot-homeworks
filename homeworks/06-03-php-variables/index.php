@@ -45,8 +45,8 @@ $arr = [
 Выведите с его помощью слово 'голубой'.*/
 
 $arr = [
-    'ru'=>['голубой', 'красный', 'зеленый'],
-    'en'=>['blue', 'red', 'green'],
+    'ru' => ['голубой', 'красный', 'зеленый'],
+    'en' => ['blue', 'red', 'green'],
 ];
 
 var_dump($arr['ru'][0]);
@@ -80,13 +80,13 @@ $min = 10;*/
 
 $min = 10;
 
-if($min <= 15){
+if ($min <= 15) {
     echo 'min в первой четверти';
-} elseif($min > 15 && $min <= 30){
+} elseif ($min > 15 && $min <= 30) {
     echo 'min во второй четверти';
-} elseif($min > 30 && $min <= 45){
+} elseif ($min > 30 && $min <= 45) {
     echo 'min в третьей четверти';
-} elseif($min > 45 && $min < 60){
+} elseif ($min > 45 && $min < 60) {
     echo 'min в четвертой четверти';
 }
 
@@ -95,7 +95,7 @@ if($min <= 15){
 
 $num = 3;
 
-switch ($num){
+switch ($num) {
     case 1:
         $result = 'зима';
         var_dump($result);
@@ -120,8 +120,8 @@ switch ($num){
 $a = 3;
 $b = 5;
 
-if($a <= 1 && $b >= 3){
+if ($a <= 1 && $b >= 3) {
     var_dump($a + $b);
-} else{
+} else {
     var_dump($a - $b);
 }
