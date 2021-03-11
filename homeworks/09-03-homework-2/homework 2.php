@@ -95,11 +95,9 @@ var_dump($digits);
 function quadraticEquation(float $a = 1, float $b = 1, float $c = 0)
 {
     $D = $b ** 2 - 4 * $a * $c;
-    var_dump($D);
     if ($D > 0) {
         $x1 = (-$b + sqrt($D)) / 2 * $a;
         $x2 = (-$b - sqrt($D)) / 2 * $a;
-        var_dump($x1);
         return ['x1' => $x1, 'x2' => $x2];
     } elseif ($D === 0) {
         $x = -$b / 2 * $a;
