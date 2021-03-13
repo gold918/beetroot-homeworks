@@ -12,6 +12,8 @@ if($answer1 === 'giraffe' && $answer2 === 'bear' && $answer3 === 'tiger') {
     $result = 'Возможно, повезёт в следующий раз!';
 }
 
+session_destroy();
+
 ?>
 
 <!doctype html>
