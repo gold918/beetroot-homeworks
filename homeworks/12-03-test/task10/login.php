@@ -1,26 +1,5 @@
 <?php
-/*Задача 10: Создать форму авторизации
-<form action="" method="POST">
-	<input name="login">
-	<input name="password" type="password">
-	<input type="submit" value="Отправить">
-</form>
-- Сделайте так, чтобы, если пользователь прошел авторизацию - выводилось сообщение об этом, а если не прошел - то сообщение о том, что введенный логин или пароль вбиты не правильно.
-Подсказка: сверять введенные данные можно с заранее подготовленными в массиве.
-- Модифицируйте код так, чтобы в случае успешной авторизации форма для ввода пароля и логина не показывалась на экране. ( Добавьте кнопку по которой будет происходить разлогнинивание.)
-- Модифицируйте код так, чтобы на странице index.php выводилось сообщение об успешной авторизации. Решите задачу через флеш-сообщения на сессиях.
-- Пусть на нашем сайте, кроме страницы login.php, есть еще и страницы 1.php, 2.php и 3.php. Сделайте так, чтобы к этим страницам мог получить доступ только авторизованный пользователь. Если пользователь не авторизован - выведите ему сообщение об этом и ссылку на страницу login.php.
-- Модифицируйте ваш код так, чтобы нельзя было зарегистрировать пользователя с пустым логином или паролем.
-- Модифицируйте ваш код так, чтобы логин был длиной от 4 до 10 символов. В случае, если это не так, выводите сообщение об этом над формой.
-- Модифицируйте ваш код так, чтобы пароль был длиной от 6 до 12 символов. В случае, если это не так, выводите сообщение об этом над формой.*/
 session_start();
-$form = '
-        <form action="" method="POST">
-            <input name="login" placeholder="login">
-            <input name="password" type="password" placeholder="password">
-            <input type="submit" value="Отправить">
-        </form>
-    ';
 
 $authorisation = [
     'aaaa' => '111100',
@@ -29,35 +8,32 @@ $authorisation = [
     'wwww' => '111111',
 ];
 
-if (!empty($_POST['login']) && !empty($_POST['password'])) {
-    if (strlen($_POST['login']) < 4 || strlen($_POST['login']) > 10) {
-        $_SESSION['message']['short login'] = '<b>Слишком короткий логин. Логин должен быть от 4 до 10 символов.</b>';
-        echo $_SESSION['message']['short login'] . $form;
-        unset($_SESSION['message']);
-        return;
+if (!empty($_POST['login'] && !empty($_POST['password']))) {
+    $login = $_POST['login'];
+    $password = $_POST['password'];
+    if (strlen($login) < 4 || strlen($login) > 10) {
+        $_SESSION['message']['shortInfo'][] = 'Слишком короткий или длинный логин. Логин должен быть от 4 до 10 символов.';
+    }
+    if (strlen($password) < 6 || strlen($password) > 12) {
+        $_SESSION['message']['shortInfo'][] = 'Слишком короткий или длинный пароль. Пароль должен быть от 6 до 12 символов.';
     }
 
-    if (strlen($_POST['password']) < 6 || strlen($_POST['password']) > 12) {
-        echo "<b>Слишком короткий пароль. Пароль должен быть от 6 до 12 символов.</b>
-              $form ";
-        return;
+    if (!isset($_SESSION['message']['shortInfo'])) {
+        if ($authorisation[$login] === $password) {
+            $_SESSION['name'] = $login;
+            $_SESSION['message']['signIn'] = "Поздравляю, $login. Вы ввошли";
+        } else {
+            $_SESSION['message']['error'] = 'Неверный логин или пароль';
+        }
     }
-
-    if ($authorisation[$_POST['login']] === $_POST['password']) {
-        echo 'Поздравляю. Вы ввошли';
-        ?>
-        <form action="" method="POST">
-            <input type="submit" value="Выйти" name="exit">
-        </form>
-        <?php
-    } else {
-        echo "$form Вы не ввошли";
-    }
-
-} else {
-    echo $form;
 }
 
 if (isset($_POST['exit'])) {
-    unset($_POST);
+    session_destroy();
+
 }
+
+header("Location: index.php");
+
+
+
