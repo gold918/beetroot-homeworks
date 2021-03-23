@@ -53,13 +53,14 @@ SELECT * FROM Customers WHERE City Like 'a%b';
 SELECT * FROM Customers WHERE City NOT Like 'a%';
 
 -- 19.	Use the IN operator to select all the records where Country is NOT "Norway" and NOT "France".
-SELECT * FROM Customers WHERE NOT Country IN ('Norway', 'France');
+SELECT * FROM Customers WHERE Country NOT  IN ('Norway', 'France');
 
 -- 20.	Use the IN operator to select all the records where Country is either "Norway" or "France".
 SELECT * FROM Customers WHERE Country IN ('Norway', 'France');
 
 -- 21.	Use the BETWEEN operator to select all the records where the value of the Price column is NOT between 10 and 20.
 SELECT * FROM Products WHERE Price NOT BETWEEN 10 AND 20;
+
 -- 22.	Use the BETWEEN operator to select all the records where the value of the ProductName column is alphabetically between 'Geitost' and 'Pavlova'.
 SELECT * FROM Products WHERE ProductName BETWEEN 'Geitost' AND 'Pavlova' ORDER BY ProductName;
 
@@ -84,14 +85,15 @@ INNER JOIN Suppliers ON Products.SupplierID = Suppliers.SupplierID AND SuppLierN
 GROUP BY SuppLierName;
 
 -- 27.	Choose the correct JOIN Display the average amount of all orders for each date (OrderDate) in the (Orders) table, if the average amount of orders on that day was more than 30. Add to each date the person who accepted the order from the Employees table on that day
-SELECT OrderDate, ROUND (AVG(PRICE * Quantity), 2) AS AVG, GROUP_CONCAT (LastName, ', ') AS Employee FROM Orders
-INNER JOIN Employees ON Orders.EmployeeID = Employees.EmployeeID
-INNER JOIN OrderDetails ON Orders.OrderID = OrderDetails.OrderID
-INNER JOIN Products ON OrderDetails.ProductID = Products.ProductID
-GROUP BY OrderDate HAVING AVG > 30;
+SELECT OrderDate, ROUND (AVG(PRICE * Quantity)) AS AVG, LastName AS Employee FROM Orders
+LEFT JOIN Employees ON Orders.EmployeeID = Employees.EmployeeID
+LEFT JOIN OrderDetails ON Orders.OrderID = OrderDetails.OrderID
+LEFT JOIN Products ON OrderDetails.ProductID = Products.ProductID
+GROUP BY OrderDate, Employees.EmployeeID HAVING AVG > 30;
+
 
 -- 28.	Use Group By. List the number of customers in each country, ordered by the country with the most customers first.
-SELECT Country, COUNT(CustomerID) AS Number_of_customers FROM Customers
+SELECT Country, COUNT(*) AS Number_of_customers FROM Customers
 GROUP BY Country
 Order BY Number_of_customers DESC;
 
