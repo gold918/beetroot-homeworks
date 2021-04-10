@@ -26,6 +26,9 @@ class CrudService
     }
 
     public function serviceUploadCategoryName($catCode, $newCatName) {
-        $this->categoriesCRUD->modelUploadCategoryName($catCode, $newCatName);
+        return $this->categoriesCRUD->modelUploadCategoryName($catCode, $newCatName);
+    }
+    public function serviceUploadCategoryCode($catCode, $newCatCode) {
+        return $this->categoriesCRUD->modelUploadCategoryCode($catCode, $newCatCode);
     }
 }

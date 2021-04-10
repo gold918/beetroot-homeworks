@@ -84,6 +84,11 @@ class AdminController extends Controller
 
                 $this->crudCategory->serviceUploadCategoryName($catCode, $_POST['cat_name']);
                 header('Location: /admin');
+            } elseif (isset($_POST['upload-submit']) && isset($_POST['cat_code'])) {
+                $_POST['cat_code'] = $this->filterData($_POST['cat_code']);
+
+                $this->crudCategory->serviceUploadCategoryCode($catCode, $_POST['cat_code']);
+                header('Location: /admin');
             } else {
                 header('Location: ' . $_SERVER['HTTP_REFERER']);                             // если форма не пришла или не со всеми данными, то ставим флаг false
             }

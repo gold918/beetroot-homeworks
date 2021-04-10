@@ -37,9 +37,18 @@ class CRUD extends AbstractModel
     }
 
     public function modelUploadCategoryName($catCode, $newCatName) {
-        $sql = $this->connection->prepare("UPDATE category SET cat_name = :new_cat_name WHERE cat_code = :cat_code)");
+
+        $sql = $this->connection->prepare("UPDATE category SET cat_name = :new_cat_name WHERE cat_code = :cat_code");
         $sql->bindParam(':cat_code', $catCode, PDO::PARAM_STR);
         $sql->bindParam(':new_cat_name', $newCatName, PDO::PARAM_STR);
+        $sql->execute();
+    }
+
+    public function modelUploadCategoryCode($catCode, $newCatCode) {
+
+        $sql = $this->connection->prepare("UPDATE category SET cat_code = :new_cat_name WHERE cat_code = :cat_code");
+        $sql->bindParam(':cat_code', $catCode, PDO::PARAM_STR);
+        $sql->bindParam(':new_cat_name', $newCatCode, PDO::PARAM_STR);
         $sql->execute();
     }
 }
